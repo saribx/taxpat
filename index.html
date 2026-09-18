@@ -1,0 +1,952 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>taxpat</title>
+  <style>
+    :root {
+      --green-dark: #166924;
+      --green-bg: #c7ec6b;
+      --green-bg-2: #b9e857;
+      --white: #ffffff;
+      --gray-bg: #f4f4f1;
+      --gray-line: #e4e4e0;
+      --text-dark: #14351a;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html,
+    body {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      font-family: 'Poppins', 'Segoe UI', system-ui, -apple-system, sans-serif;
+      background: var(--gray-bg);
+    }
+
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap');
+
+    .app {
+      max-width: 480px;
+      margin: 0 auto;
+      min-height: 100vh;
+      background: var(--green-bg);
+      background-image: radial-gradient(circle at 100% 0%, var(--green-bg-2), var(--green-bg) 60%);
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 22px 20px 0 20px;
+    }
+
+    .brand {
+      font-weight: 800;
+      font-size: 18px;
+      color: var(--green-dark);
+      letter-spacing: -0.5px;
+      display: flex;
+      align-items: center;
+      gap: 0;
+    }
+
+    .brand-logo {
+      height: 52px;
+      flex-shrink: 0;
+    }
+
+    .brand-logo img {
+      height: 100%;
+      object-fit: contain;
+    }
+
+    .brand span {
+      display: none;
+    }
+
+    .close-btn {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: var(--white);
+      border: none;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+      color: #333;
+      cursor: pointer;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+    }
+
+    .headline-zone {
+      padding: 28px 26px 20px 26px;
+    }
+
+    .headline {
+      font-weight: 800;
+      font-size: 34px;
+      line-height: 1.15;
+      color: var(--text-dark);
+      letter-spacing: -0.5px;
+      margin: 0;
+      min-height: 92px;
+      transition: opacity 0.25s ease;
+    }
+
+    .card-wrap {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+    }
+
+    .card {
+      background: var(--white);
+      border-radius: 32px 32px 0 0;
+      padding: 26px 24px 24px 24px;
+      box-shadow: 0 -8px 30px rgba(0, 0, 0, 0.06);
+      min-height: 58vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .card-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 18px;
+    }
+
+    .back-btn {
+      background: none;
+      border: none;
+      font-size: 20px;
+      color: var(--text-dark);
+      cursor: pointer;
+      padding: 4px;
+      visibility: hidden;
+    }
+
+    .back-btn.visible {
+      visibility: visible;
+    }
+
+    .step-count {
+      font-size: 13px;
+      color: #999;
+      font-weight: 600;
+    }
+
+    .progress-track {
+      height: 6px;
+      background: var(--gray-line);
+      border-radius: 6px;
+      overflow: hidden;
+      margin-bottom: 26px;
+    }
+
+    .progress-fill {
+      height: 100%;
+      background: var(--green-dark);
+      border-radius: 6px;
+      width: 25%;
+      transition: width 0.35s ease;
+    }
+
+    .q-title {
+      font-size: 21px;
+      font-weight: 700;
+      color: var(--text-dark);
+      margin: 0 0 18px 0;
+      line-height: 1.3;
+    }
+
+    .options {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      overflow-y: auto;
+    }
+
+    .option {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      background: var(--gray-bg);
+      border: 2px solid transparent;
+      border-radius: 16px;
+      padding: 16px 16px;
+      cursor: pointer;
+      font-size: 16px;
+      font-weight: 500;
+      color: var(--text-dark);
+      transition: all 0.15s ease;
+      user-select: none;
+    }
+
+    .option:hover {
+      background: #ececE6;
+    }
+
+    .option.selected {
+      background: var(--white);
+      border-color: var(--green-dark);
+    }
+
+    .radio {
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      border: 2px solid #c9c9c2;
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--white);
+    }
+
+    .option.selected .radio {
+      border-color: var(--green-dark);
+      background: var(--green-dark);
+    }
+
+    .radio::after {
+      content: '';
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--white);
+      display: none;
+    }
+
+    .option.selected .radio::after {
+      display: block;
+    }
+
+    .emoji {
+      font-size: 20px;
+      width: 26px;
+      text-align: center;
+    }
+
+    input[type="text"],
+    input[type="number"] {
+      width: 100%;
+      padding: 14px 16px;
+      font-size: 16px;
+      font-weight: 500;
+      border-radius: 12px;
+      border: 2px solid var(--gray-line);
+      background: var(--gray-bg);
+      color: var(--text-dark);
+      font-family: inherit;
+      outline: none;
+      margin-bottom: 8px;
+    }
+
+    input[type="text"]:focus,
+    input[type="number"]:focus {
+      border-color: var(--green-dark);
+      background: var(--white);
+    }
+
+    #originOptions {
+      max-height: 320px;
+      overflow-y: auto;
+    }
+
+    .bottom-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: auto;
+      padding-top: 22px;
+    }
+
+    .next-label {
+      font-size: 13px;
+      color: #999;
+      font-weight: 600;
+    }
+
+    .next-label strong {
+      display: block;
+      color: var(--text-dark);
+      font-size: 15px;
+      font-weight: 700;
+      margin-top: 2px;
+    }
+
+    .next-btn {
+      background: var(--green-dark);
+      color: var(--white);
+      border: none;
+      border-radius: 100px;
+      padding: 15px 30px;
+      font-size: 16px;
+      font-weight: 700;
+      cursor: pointer;
+      font-family: inherit;
+      transition: opacity 0.15s ease, transform 0.1s ease;
+      box-shadow: 0 4px 14px rgba(22, 105, 36, 0.35);
+    }
+
+    .next-btn:disabled {
+      opacity: 0.35;
+      cursor: not-allowed;
+      box-shadow: none;
+    }
+
+    .next-btn:not(:disabled):active {
+      transform: scale(0.97);
+    }
+
+    .leaf {
+      position: absolute;
+      opacity: 0.5;
+      pointer-events: none;
+    }
+
+    .step {
+      display: none;
+      flex: 1;
+      flex-direction: column;
+    }
+
+    .step.active {
+      display: flex;
+    }
+
+    .done-screen {
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 40px 30px;
+      flex: 1;
+    }
+
+    .done-screen.active {
+      display: flex;
+    }
+
+    .done-check {
+      width: 84px;
+      height: 84px;
+      border-radius: 50%;
+      background: var(--green-dark);
+      color: var(--white);
+      font-size: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 24px;
+    }
+
+    .done-screen h2 {
+      font-size: 26px;
+      font-weight: 800;
+      color: var(--text-dark);
+      margin: 0 0 10px 0;
+    }
+
+    .done-screen p {
+      color: #666;
+      font-size: 15px;
+      margin: 0 0 26px 0;
+    }
+
+    .summary {
+      background: linear-gradient(135deg, #f9fdf5 0%, #f4f9f1 100%);
+      border: 2px solid var(--gray-line);
+      border-radius: 20px;
+      padding: 20px 18px;
+      width: 100%;
+      text-align: left;
+      font-size: 15px;
+      color: var(--text-dark);
+    }
+
+    .summary div {
+      padding: 14px 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .summary div:not(:last-child) {
+      border-bottom: 1px solid rgba(228, 228, 224, 0.6);
+    }
+
+    .summary span:first-child {
+      color: #999;
+      font-weight: 600;
+      font-size: 13px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      min-width: 90px;
+      flex-shrink: 0;
+    }
+
+    .summary span:last-child {
+      font-weight: 700;
+      font-size: 16px;
+      text-align: right;
+      color: var(--green-dark);
+      flex: 1;
+      word-break: break-word;
+    }
+
+    .comparison-container {
+      background: linear-gradient(135deg, #f9fdf5 0%, #f4f9f1 100%);
+      border: 2px solid var(--gray-line);
+      border-radius: 20px;
+      overflow: hidden;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      min-height: 0;
+    }
+
+    .comparison-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      border-bottom: 1px solid rgba(228, 228, 224, 0.6);
+      min-height: 70px;
+      align-items: center;
+    }
+
+    .comparison-row:last-child {
+      border-bottom: none;
+    }
+
+    .comparison-row.highlight-row {
+      background: rgba(198, 236, 107, 0.15);
+    }
+
+    .metric-label {
+      padding: 12px 14px;
+      font-size: 13px;
+      font-weight: 600;
+      color: #666;
+      text-transform: uppercase;
+      letter-spacing: 0.4px;
+      border-right: 1px solid rgba(228, 228, 224, 0.6);
+    }
+
+    .comparison-row.highlight-row .metric-label {
+      color: var(--green-dark);
+      font-weight: 700;
+    }
+
+    .comparison-cell {
+      padding: 12px 14px;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 4px;
+      border-right: 1px solid rgba(228, 228, 224, 0.6);
+    }
+
+    .comparison-cell:last-child {
+      border-right: none;
+    }
+
+    .comparison-cell.header {
+      background: var(--green-dark);
+      color: var(--white);
+      font-weight: 700;
+      padding: 16px 14px;
+      gap: 8px;
+    }
+
+    .comparison-cell.header .flag {
+      font-size: 24px;
+    }
+
+    .comparison-cell.header .country-name {
+      font-size: 14px;
+    }
+
+    .comparison-cell.highlight {
+      background: rgba(198, 236, 107, 0.2);
+      font-weight: 700;
+    }
+
+    .comparison-row.highlight-row .comparison-cell.highlight {
+      background: rgba(198, 236, 107, 0.35);
+    }
+
+    .amount {
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--green-dark);
+    }
+
+    .amount-eur {
+      font-size: 12px;
+      color: #999;
+      font-weight: 500;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="app">
+    <div class="topbar">
+      <div class="brand">
+        <div class="brand-logo"><img src="taxpat_name.png" alt="taxpat"></div>
+      </div>
+    </div>
+
+    <div class="headline-zone">
+      <p class="headline" id="headline">How long are you planning<br>to stay in Germany?</p>
+    </div>
+
+    <div class="card-wrap">
+      <div class="card">
+        <div class="card-top">
+          <button class="back-btn" id="backBtn" onclick="prevStep()">←</button>
+          <div class="step-count" id="stepCount">Step 1/5</div>
+        </div>
+
+        <div class="progress-track">
+          <div class="progress-fill" id="progressFill"></div>
+        </div>
+
+        <!-- Step 1: How long in Germany -->
+        <div class="step active" id="step1">
+          <p class="q-title">How long will you stay in Germany?</p>
+          <div class="options" id="periodOptions">
+            <div class="option" data-value="0–3 months">0–3 months</div>
+            <div class="option" data-value="3–6 months">3–6 months</div>
+            <div class="option" data-value="6–12 months">6–12 months</div>
+            <div class="option" data-value="More than 1 year">More than 1 year</div>
+          </div>
+          <div class="bottom-bar" style="margin-top: 24px;">
+            <button class="next-btn" id="nextStep1" onclick="nextStep()" disabled>Continue</button>
+          </div>
+        </div>
+
+        <!-- Step 2: Nationality -->
+        <div class="step" id="step2">
+          <input type="text" id="nationalityInput" placeholder="Search country..." oninput="filterCountries()">
+          <div class="options" id="nationalityOptions" style="margin-top: 12px;">
+          </div>
+        </div>
+
+        <!-- Step 3: Family & Status -->
+        <div class="step" id="step3">
+          <p class="q-title">What's your family situation?</p>
+          <div class="options" id="maritalOptions">
+            <div class="option" data-value="Single">Single</div>
+            <div class="option" data-value="Married">Married</div>
+            <div class="option" data-value="Married with kids">Married with kids</div>
+          </div>
+          <div class="bottom-bar" style="margin-top: 24px;">
+            <button class="next-btn" id="nextStep3" onclick="nextStep()" disabled>Continue</button>
+          </div>
+        </div>
+
+        <!-- Step 4: Work & Income -->
+        <div class="step" id="step4">
+          <p class="q-title">What's your employment status?</p>
+          <div class="options" id="employmentOptions">
+            <div class="option" data-value="Employed">Employed</div>
+            <div class="option" data-value="Self-employed">Self-employed</div>
+            <div class="option" data-value="Freelancer">Freelancer</div>
+            <div class="option" data-value="Student">Student</div>
+          </div>
+          <div style="margin-top: 24px;">
+            <p class="q-title">Monthly gross income (₨)</p>
+            <input type="number" id="incomeInput" placeholder="Enter amount in PKR..." oninput="checkIncome()">
+          </div>
+          <div class="bottom-bar" style="margin-top: 24px;">
+            <button class="next-btn" id="nextStep4" onclick="nextStep()" disabled>Continue</button>
+          </div>
+        </div>
+
+        <!-- Step 5: Housing -->
+        <div class="step" id="step5">
+          <p class="q-title">How do you currently live?</p>
+          <div class="options" id="housingOptions">
+            <div class="option" data-value="Renting">Renting</div>
+            <div class="option" data-value="Own home">Own home</div>
+            <div class="option" data-value="Living with family">Living with family</div>
+          </div>
+          <div style="margin-top: 24px;">
+            <p class="q-title">Monthly housing cost (₨)</p>
+            <input type="number" id="costInput" placeholder="Enter amount in PKR..." oninput="checkCost()">
+          </div>
+          <div class="bottom-bar" style="margin-top: 24px;">
+            <button class="next-btn" id="nextStep5" onclick="nextStep()" disabled>Continue</button>
+          </div>
+        </div>
+
+        <!-- Step 6: Upload (optional) -->
+        <div class="step" id="step6">
+          <p class="q-title">Upload your payslip or tax document</p>
+          <p style="color: #999; font-size: 14px; margin: 12px 0;">For a more accurate calculation (optional)</p>
+          <input type="file" id="documentUpload" accept=".pdf,.jpg,.jpeg,.png" style="margin-top: 16px;">
+          <div class="bottom-bar" style="margin-top: 24px;">
+            <button class="next-btn" id="nextStep6" onclick="nextStep()"
+              style="flex: 1; margin-right: 8px;">Upload</button>
+            <button class="next-btn" id="skipStep6" onclick="nextStep()"
+              style="flex: 1; background: #999;">Skip</button>
+          </div>
+        </div>
+
+        <!-- Step 7: Target City -->
+        <div class="step" id="step7">
+          <p class="q-title">Which city are you moving to?</p>
+          <div class="options" id="cityOptions">
+            <div class="option" data-value="Berlin">Berlin</div>
+            <div class="option" data-value="Munich">Munich</div>
+            <div class="option" data-value="Frankfurt">Frankfurt</div>
+            <div class="option" data-value="Hamburg">Hamburg</div>
+            <div class="option" data-value="Cologne">Cologne</div>
+            <div class="option" data-value="Other">Other</div>
+          </div>
+          <div class="bottom-bar" style="margin-top: 24px;">
+            <button class="next-btn" id="nextStep7" onclick="nextStep()" disabled>Continue</button>
+          </div>
+        </div>
+
+        <!-- Step 8: Work Plan -->
+        <div class="step" id="step8">
+          <p class="q-title">What's your work situation in Germany?</p>
+          <div class="options" id="workPlanOptions">
+            <div class="option" data-value="Have a job offer">Have a job offer</div>
+            <div class="option" data-value="Planning to job search">Planning to job search</div>
+            <div class="option" data-value="Studying">Studying</div>
+            <div class="option" data-value="Self-employed">Self-employed</div>
+          </div>
+          <div class="bottom-bar" style="margin-top: 24px;">
+            <button class="next-btn" id="nextStep8" onclick="nextStep()" disabled>Continue</button>
+          </div>
+        </div>
+
+        <!-- Step 9: Expected Income & Housing -->
+        <div class="step" id="step9">
+          <p class="q-title">Expected monthly income (₨)</p>
+          <input type="number" id="expectedIncomeInput" placeholder="Enter amount in PKR..."
+            oninput="checkExpectedIncome()">
+          <div style="margin-top: 24px;">
+            <p class="q-title">Housing preference</p>
+            <div class="options" id="prefOptions">
+              <div class="option" data-value="Shared flat (WG)">Shared flat (WG)</div>
+              <div class="option" data-value="Own apartment">Own apartment</div>
+              <div class="option" data-value="Not sure yet">Not sure yet</div>
+            </div>
+          </div>
+          <div class="bottom-bar" style="margin-top: 24px;">
+            <button class="next-btn" id="nextStep9" onclick="nextStep()" disabled>Continue</button>
+          </div>
+        </div>
+
+        <!-- Step 10: Upload (optional) -->
+        <div class="step" id="step10">
+          <p class="q-title">Upload your job offer or contract</p>
+          <p style="color: #999; font-size: 14px; margin: 12px 0;">For more accurate income calculation (optional)</p>
+          <input type="file" id="jobDocumentUpload" accept=".pdf,.jpg,.jpeg,.png" style="margin-top: 16px;">
+          <div class="bottom-bar" style="margin-top: 24px;">
+            <button class="next-btn" id="nextStep10" onclick="nextStep()"
+              style="flex: 1; margin-right: 8px;">Upload</button>
+            <button class="next-btn" id="skipStep10" onclick="nextStep()"
+              style="flex: 1; background: #999;">Skip</button>
+          </div>
+        </div>
+
+        <!-- Step 11: Country Comparison -->
+        <div class="step" id="step11">
+          <div class="comparison-container">
+            <div class="comparison-row">
+              <div class="metric-label"></div>
+              <div class="comparison-cell header">
+                <span class="flag">🇵🇰</span>
+                <span class="country-name">Islamabad</span>
+              </div>
+              <div class="comparison-cell header">
+                <span class="flag">🇩🇪</span>
+                <span class="country-name">Berlin</span>
+              </div>
+            </div>
+
+            <div class="comparison-row">
+              <div class="metric-label">Monthly Gross Salary</div>
+              <div class="comparison-cell">
+                <div class="amount">₨ 300,000</div>
+                <div class="amount-eur">€ 943</div>
+              </div>
+              <div class="comparison-cell highlight">
+                <div class="amount">€ 6,000</div>
+              </div>
+            </div>
+
+            <div class="comparison-row">
+              <div class="metric-label">Salary Deductions</div>
+              <div class="comparison-cell">
+                <div class="amount">₨ 34,667</div>
+                <div class="amount-eur">€ 109</div>
+              </div>
+              <div class="comparison-cell highlight">
+                <div class="amount">€ 2,419</div>
+              </div>
+            </div>
+
+            <div class="comparison-row">
+              <div class="metric-label">Monthly Take-Home</div>
+              <div class="comparison-cell">
+                <div class="amount">₨ 265,333</div>
+                <div class="amount-eur">€ 834</div>
+              </div>
+              <div class="comparison-cell highlight">
+                <div class="amount">€ 3,581</div>
+              </div>
+            </div>
+
+            <div class="comparison-row">
+              <div class="metric-label">Monthly Living Costs</div>
+              <div class="comparison-cell">
+                <div class="amount">₨ 180,000</div>
+                <div class="amount-eur">€ 566</div>
+              </div>
+              <div class="comparison-cell highlight">
+                <div class="amount">€ 2,265</div>
+              </div>
+            </div>
+
+            <div class="comparison-row highlight-row">
+              <div class="metric-label"><strong>Money Remaining</strong></div>
+              <div class="comparison-cell">
+                <div class="amount">₨ 85,333</div>
+                <div class="amount-eur">€ 268</div>
+              </div>
+              <div class="comparison-cell highlight">
+                <div class="amount"><strong>€ 1,316</strong></div>
+              </div>
+            </div>
+          </div>
+          <div class="bottom-bar">
+            <button class="next-btn" id="next11" onclick="finishComparison()">See Results</button>
+          </div>
+        </div>
+
+        <!-- Done -->
+        <div class="done-screen" id="doneScreen">
+          <div class="done-check">✓</div>
+          <h2>Thank you!</h2>
+          <p>We saved your information.</p>
+          <div class="summary" id="summary"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const headlines = [
+      "How long will you<br>stay in Germany?",
+      "What's your<br>nationality?",
+      "What's your<br>family situation?",
+      "What's your<br>employment status?",
+      "How do you<br>currently live?",
+      "Upload payslip<br>(optional)",
+      "Which city are you<br>moving to?",
+      "What's your work<br>situation in Germany?",
+      "Expected income &<br>housing preference",
+      "Upload job offer<br>(optional)",
+      "Your financial<br>comparison"
+    ];
+
+    const answers = {
+      planned_move_period: null,
+      nationality: null,
+      marital_status: null,
+      employment_type: null,
+      monthly_gross_income: null,
+      housing_situation: null,
+      monthly_housing_cost: null,
+      target_city: null,
+      work_plan_type: null,
+      expected_income: null,
+      housing_preference: null
+    };
+    let currentStep = 1;
+    const totalSteps = 11;
+
+    function setupOptions(containerId, key, nextBtnId, isCheckbox = false) {
+      const container = document.getElementById(containerId);
+      if (!container) return;
+
+      container.querySelectorAll('.option').forEach(opt => {
+        opt.addEventListener('click', () => {
+          if (!isCheckbox) {
+            container.querySelectorAll('.option').forEach(o => o.classList.remove('selected'));
+            opt.classList.add('selected');
+            answers[key] = opt.dataset.value;
+          } else {
+            opt.classList.toggle('selected');
+            answers[key] = Array.from(container.querySelectorAll('.option.selected')).map(o => o.dataset.value);
+          }
+          if (nextBtnId) {
+            const btn = document.getElementById(nextBtnId);
+            if (btn) btn.disabled = false;
+          }
+        });
+      });
+    }
+
+    const countryFlags = {
+      'Afghanistan': '🇦🇫', 'Albania': '🇦🇱', 'Algeria': '🇩🇿', 'Andorra': '🇦🇩', 'Angola': '🇦🇴', 'Argentina': '🇦🇷', 'Armenia': '🇦🇲', 'Australia': '🇦🇺', 'Austria': '🇦🇹',
+      'Azerbaijan': '🇦🇿', 'Bahamas': '🇧🇸', 'Bahrain': '🇧🇭', 'Bangladesh': '🇧🇩', 'Barbados': '🇧🇧', 'Belarus': '🇧🇾', 'Belgium': '🇧🇪', 'Belize': '🇧🇿', 'Benin': '🇧🇯',
+      'Bhutan': '🇧🇹', 'Bolivia': '🇧🇴', 'Bosnia and Herzegovina': '🇧🇦', 'Botswana': '🇧🇼', 'Brazil': '🇧🇷', 'Brunei': '🇧🇳', 'Bulgaria': '🇧🇬', 'Burkina Faso': '🇧🇫',
+      'Burundi': '🇧🇮', 'Cambodia': '🇰🇭', 'Cameroon': '🇨🇲', 'Canada': '🇨🇦', 'Cape Verde': '🇨🇻', 'Central African Republic': '🇨🇫', 'Chad': '🇹🇩', 'Chile': '🇨🇱',
+      'China': '🇨🇳', 'Colombia': '🇨🇴', 'Comoros': '🇰🇲', 'Congo': '🇨🇬', 'Costa Rica': '🇨🇷', 'Croatia': '🇭🇷', 'Cuba': '🇨🇺', 'Cyprus': '🇨🇾', 'Czech Republic': '🇨🇿',
+      'Czechia': '🇨🇿', 'Denmark': '🇩🇰', 'Djibouti': '🇩🇯', 'Dominica': '🇩🇲', 'Dominican Republic': '🇩🇴', 'East Timor': '🇹🇱', 'Ecuador': '🇪🇨', 'Egypt': '🇪🇬',
+      'El Salvador': '🇸🇻', 'Equatorial Guinea': '🇬🇶', 'Eritrea': '🇪🇷', 'Estonia': '🇪🇪', 'Eswatini': '🇸🇿', 'Ethiopia': '🇪🇹', 'Fiji': '🇫🇯', 'Finland': '🇫🇮',
+      'France': '🇫🇷', 'Gabon': '🇬🇦', 'Gambia': '🇬🇲', 'Georgia': '🇬🇪', 'Germany': '🇩🇪', 'Ghana': '🇬🇭', 'Greece': '🇬🇷', 'Grenada': '🇬🇩', 'Guatemala': '🇬🇹', 'Guinea': '🇬🇳',
+      'Guinea-Bissau': '🇬🇼', 'Guyana': '🇬🇾', 'Haiti': '🇭🇹', 'Honduras': '🇭🇳', 'Hong Kong': '🇭🇰', 'Hungary': '🇭🇺', 'Iceland': '🇮🇸', 'India': '🇮🇳', 'Indonesia': '🇮🇩',
+      'Iran': '🇮🇷', 'Iraq': '🇮🇶', 'Ireland': '🇮🇪', 'Israel': '🇮🇱', 'Italy': '🇮🇹', 'Jamaica': '🇯🇲', 'Japan': '🇯🇵', 'Jordan': '🇯🇴', 'Kazakhstan': '🇰🇿', 'Kenya': '🇰🇪',
+      'Kiribati': '🇰🇮', 'Kuwait': '🇰🇼', 'Kyrgyzstan': '🇰🇬', 'Laos': '🇱🇦', 'Latvia': '🇱🇻', 'Lebanon': '🇱🇧', 'Lesotho': '🇱🇸', 'Liberia': '🇱🇷', 'Libya': '🇱🇾',
+      'Liechtenstein': '🇱🇮', 'Lithuania': '🇱🇹', 'Luxembourg': '🇱🇺', 'Macao': '🇲🇴', 'Madagascar': '🇲🇬', 'Malawi': '🇲🇼', 'Malaysia': '🇲🇾', 'Maldives': '🇲🇻',
+      'Mali': '🇲🇱', 'Malta': '🇲🇹', 'Marshall Islands': '🇲🇭', 'Mauritania': '🇲🇷', 'Mauritius': '🇲🇺', 'Mexico': '🇲🇽', 'Micronesia': '🇫🇲', 'Moldova': '🇲🇩',
+      'Monaco': '🇲🇨', 'Mongolia': '🇲🇳', 'Montenegro': '🇲🇪', 'Morocco': '🇲🇦', 'Mozambique': '🇲🇿', 'Myanmar': '🇲🇲', 'Namibia': '🇳🇦', 'Nauru': '🇳🇷', 'Nepal': '🇳🇵',
+      'Netherlands': '🇳🇱', 'New Zealand': '🇳🇿', 'Nicaragua': '🇳🇮', 'Niger': '🇳🇪', 'Nigeria': '🇳🇬', 'North Korea': '🇰🇵', 'North Macedonia': '🇲🇰', 'Norway': '🇳🇴',
+      'Oman': '🇴🇲', 'Pakistan': '🇵🇰', 'Palau': '🇵🇼', 'Palestine': '🇵🇸', 'Panama': '🇵🇦', 'Papua New Guinea': '🇵🇬', 'Paraguay': '🇵🇾', 'Peru': '🇵🇪', 'Philippines': '🇵🇭',
+      'Poland': '🇵🇱', 'Portugal': '🇵🇹', 'Qatar': '🇶🇦', 'Romania': '🇷🇴', 'Russia': '🇷🇺', 'Rwanda': '🇷🇼', 'Saint Kitts and Nevis': '🇰🇳', 'Saint Lucia': '🇱🇨',
+      'Saint Vincent and the Grenadines': '🇻🇨', 'Samoa': '🇼🇸', 'San Marino': '🇸🇲', 'Sao Tome and Principe': '🇸🇹', 'Saudi Arabia': '🇸🇦',
+      'Senegal': '🇸🇳', 'Serbia': '🇷🇸', 'Seychelles': '🇸🇨', 'Sierra Leone': '🇸🇱', 'Singapore': '🇸🇬', 'Slovakia': '🇸🇰', 'Slovenia': '🇸🇮', 'Solomon Islands': '🇸🇧',
+      'Somalia': '🇸🇴', 'South Africa': '🇿🇦', 'South Korea': '🇰🇷', 'South Sudan': '🇸🇸', 'Spain': '🇪🇸', 'Sri Lanka': '🇱🇰', 'Sudan': '🇸🇩', 'Suriname': '🇸🇷',
+      'Sweden': '🇸🇪', 'Switzerland': '🇨🇭', 'Syria': '🇸🇾', 'Taiwan': '🇹🇼', 'Tajikistan': '🇹🇯', 'Tanzania': '🇹🇿', 'Thailand': '🇹🇭', 'Timor-Leste': '🇹🇱', 'Togo': '🇹🇬',
+      'Tonga': '🇹🇴', 'Trinidad and Tobago': '🇹🇹', 'Tunisia': '🇹🇳', 'Turkey': '🇹🇷', 'Turkmenistan': '🇹🇲', 'Tuvalu': '🇹🇻', 'Uganda': '🇺🇬', 'Ukraine': '🇺🇦',
+      'United Arab Emirates': '🇦🇪', 'United Kingdom': '🇬🇧', 'United States': '🇺🇸', 'Uruguay': '🇺🇾', 'Uzbekistan': '🇺🇿', 'Vanuatu': '🇻🇺', 'Vatican City': '🇻🇦',
+      'Venezuela': '🇻🇪', 'Vietnam': '🇻🇳', 'Yemen': '🇾🇪', 'Zambia': '🇿🇲', 'Zimbabwe': '🇿🇼'
+    };
+
+    const countries = Object.keys(countryFlags);
+
+    function initializeNationalities() {
+      const natOptions = document.getElementById('nationalityOptions');
+      countries.forEach(country => {
+        const div = document.createElement('div');
+        div.className = 'option';
+        div.dataset.value = country;
+        const flag = countryFlags[country] || '🌍';
+        div.innerHTML = `<span style="margin-right: 10px;">${flag}</span>${country}`;
+        div.addEventListener('click', () => {
+          document.querySelectorAll('#nationalityOptions .option').forEach(o => o.classList.remove('selected'));
+          div.classList.add('selected');
+          answers.nationality = country;
+          setTimeout(() => nextStep(), 200);
+        });
+        natOptions.appendChild(div);
+      });
+    }
+    initializeNationalities();
+
+    function filterCountries() {
+      const input = document.getElementById('nationalityInput').value.toLowerCase();
+      const options = document.querySelectorAll('#nationalityOptions .option');
+      options.forEach(opt => {
+        const text = opt.textContent.toLowerCase();
+        opt.style.display = text.includes(input) ? 'flex' : 'none';
+      });
+    }
+
+    // Step 1: How long in Germany
+    setupOptions('periodOptions', 'planned_move_period', 'nextStep1');
+
+    // Step 3: Family & Status
+    setupOptions('maritalOptions', 'marital_status', 'nextStep3');
+
+    // Step 4: Work & Income
+    setupOptions('employmentOptions', 'employment_type', 'nextStep4');
+    function checkIncome() {
+      const val = document.getElementById('incomeInput').value;
+      answers.monthly_gross_income = val;
+      const empSelected = document.querySelector('#employmentOptions .option.selected');
+      document.getElementById('nextStep4').disabled = !(val && empSelected);
+    }
+
+    // Step 5: Housing
+    setupOptions('housingOptions', 'housing_situation', 'nextStep5');
+    function checkCost() {
+      const val = document.getElementById('costInput').value;
+      answers.monthly_housing_cost = val;
+      const housSelected = document.querySelector('#housingOptions .option.selected');
+      document.getElementById('nextStep5').disabled = !(val && housSelected);
+    }
+
+    // Step 7: Target City
+    setupOptions('cityOptions', 'target_city', 'nextStep7');
+
+    // Step 8: Work Plan
+    setupOptions('workPlanOptions', 'work_plan_type', 'nextStep8');
+
+    // Step 9: Expected Income & Housing
+    setupOptions('prefOptions', 'housing_preference', 'nextStep9');
+    function checkExpectedIncome() {
+      const val = document.getElementById('expectedIncomeInput').value;
+      answers.expected_income = val;
+      const prefSelected = document.querySelector('#prefOptions .option.selected');
+      document.getElementById('nextStep9').disabled = !(val && prefSelected);
+    }
+
+
+    function updateHeader() {
+      document.getElementById('headline').innerHTML = headlines[currentStep - 1];
+      document.getElementById('stepCount').textContent = `Step ${currentStep}/${totalSteps}`;
+      document.getElementById('progressFill').style.width = (currentStep / totalSteps * 100) + '%';
+      document.getElementById('backBtn').classList.toggle('visible', currentStep > 1);
+    }
+
+    function nextStep() {
+      document.getElementById('step' + currentStep).classList.remove('active');
+      currentStep++;
+      document.getElementById('step' + currentStep).classList.add('active');
+      if (currentStep === 4) {
+        document.getElementById('sum-duration').textContent = answers.duration || '-';
+        document.getElementById('sum-origin').textContent = answers.origin || '-';
+        document.getElementById('sum-employment').textContent = answers.employmentType || '-';
+      }
+      updateHeader();
+    }
+
+    function prevStep() {
+      if (currentStep === 1) return;
+      document.getElementById('step' + currentStep).classList.remove('active');
+      currentStep--;
+      document.getElementById('step' + currentStep).classList.add('active');
+      updateHeader();
+    }
+
+    function finishComparison() {
+      console.log('Finishing comparison with answers:', answers);
+      document.getElementById('step9').classList.remove('active');
+      document.getElementById('doneScreen').classList.add('active');
+      document.getElementById('backBtn').classList.remove('visible');
+    }
+
+    function restart() {
+      location.reload();
+    }
+  </script>
+
+</body>
+
+</html>

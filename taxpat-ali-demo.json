@@ -1,0 +1,508 @@
+{
+  "schemaVersion": "1.0.0",
+  "scenarioId": "ali-islamabad-to-berlin",
+  "scenarioType": "illustrative_static_demo",
+  "title": "Ali's move from Islamabad to Berlin",
+  "locale": "en-DE",
+  "baseCurrency": "EUR",
+  "disclaimer": "All amounts are illustrative estimates for a fictional product demonstration. They are not tax, financial, legal or immigration advice.",
+  "profile": {
+    "firstName": "Ali",
+    "origin": {
+      "city": "Islamabad",
+      "country": "Pakistan",
+      "countryCode": "PK"
+    },
+    "destination": {
+      "city": "Berlin",
+      "country": "Germany",
+      "countryCode": "DE"
+    },
+    "residencyStatus": "moved_less_than_6_months_ago",
+    "employmentType": "employed_full_time",
+    "jobTitle": "AI Engineer",
+    "householdSituation": "single",
+    "hasChildren": false,
+    "apartmentStatus": "searching",
+    "visaStatusChanged": true,
+    "preparingOutsideFilingSeason": true
+  },
+  "exchangeRate": {
+    "from": "EUR",
+    "to": "PKR",
+    "rate": 318.2,
+    "asOf": "2026-09-17",
+    "isLive": false,
+    "note": "Snapshot used for the demo. Production must use a current exchange-rate provider and show the timestamp."
+  },
+  "assumptions": {
+    "taxYear": 2026,
+    "germany": {
+      "annualGrossSalaryEUR": 72000,
+      "monthlyGrossSalaryEUR": 6000,
+      "taxClass": "I",
+      "churchTaxApplied": false,
+      "publicHealthInsurance": true,
+      "childlessCareInsuranceSurcharge": true,
+      "solidaritySurchargeApplied": false
+    },
+    "pakistan": {
+      "monthlyGrossSalaryPKR": 300000,
+      "annualGrossSalaryPKR": 3600000,
+      "calculationScope": "salary_income_tax_only"
+    },
+    "housing": {
+      "selectedApartment": false,
+      "assumedColdRentEUR": 850,
+      "assumedWarmRentEUR": 1050,
+      "recommendedMaximumWarmRentEUR": 1150
+    }
+  },
+  "dashboardSummary": {
+    "status": "on_track",
+    "headline": "You're financially prepared for your first months in Germany.",
+    "primaryMetric": {
+      "label": "Expected money remaining each month",
+      "amountEUR": 1316
+    },
+    "supportingMessage": "Nothing urgent today. Your biggest remaining uncertainty is your apartment cost, not your salary deductions.",
+    "confidence": "illustrative",
+    "openVariables": [
+      "actual_apartment_cost",
+      "employment_start_date",
+      "income_earned_in_pakistan_during_move_year",
+      "actual_health_insurer"
+    ]
+  },
+  "countryComparison": {
+    "columns": [
+      "islamabad",
+      "berlin"
+    ],
+    "rows": [
+      {
+        "id": "monthly_gross_salary",
+        "label": "Monthly gross salary",
+        "islamabad": {
+          "amount": 300000,
+          "currency": "PKR",
+          "amountEUR": 943
+        },
+        "berlin": {
+          "amount": 6000,
+          "currency": "EUR"
+        }
+      },
+      {
+        "id": "salary_deductions",
+        "label": "Salary deductions",
+        "islamabad": {
+          "amount": 34667,
+          "currency": "PKR",
+          "amountEUR": 109,
+          "scope": "estimated_salary_income_tax_only"
+        },
+        "berlin": {
+          "amount": 2419,
+          "currency": "EUR",
+          "scope": "wage_tax_and_employee_social_insurance"
+        }
+      },
+      {
+        "id": "monthly_take_home",
+        "label": "Monthly take-home pay",
+        "islamabad": {
+          "amount": 265333,
+          "currency": "PKR",
+          "amountEUR": 834
+        },
+        "berlin": {
+          "amount": 3581,
+          "currency": "EUR"
+        }
+      },
+      {
+        "id": "assumed_living_costs",
+        "label": "Assumed monthly living costs",
+        "islamabad": {
+          "amount": 180000,
+          "currency": "PKR",
+          "amountEUR": 566,
+          "isUserConfirmed": false
+        },
+        "berlin": {
+          "amount": 2265,
+          "currency": "EUR",
+          "isUserConfirmed": false
+        }
+      },
+      {
+        "id": "money_remaining",
+        "label": "Money remaining",
+        "islamabad": {
+          "amount": 85333,
+          "currency": "PKR",
+          "amountEUR": 268
+        },
+        "berlin": {
+          "amount": 1316,
+          "currency": "EUR"
+        }
+      }
+    ],
+    "insights": {
+      "grossSalaryIncreaseEUR": 5057,
+      "takeHomeIncreaseEUR": 2747,
+      "moneyRemainingIncreaseEUR": 1048,
+      "purchasingPowerWarning": "This is a nominal currency comparison. It does not compare purchasing power between Islamabad and Berlin."
+    }
+  },
+  "germanyPayroll": {
+    "period": "monthly",
+    "grossSalaryEUR": 6000,
+    "deductions": [
+      {
+        "id": "wage_tax",
+        "label": "Wage tax",
+        "amountEUR": 1135,
+        "category": "tax",
+        "explanation": "German income tax collected through payroll."
+      },
+      {
+        "id": "pension_insurance",
+        "label": "Pension insurance",
+        "amountEUR": 558,
+        "category": "social_insurance",
+        "explanation": "Contribution toward the public pension system."
+      },
+      {
+        "id": "health_insurance",
+        "label": "Health insurance",
+        "amountEUR": 509,
+        "category": "social_insurance",
+        "explanation": "Estimated employee contribution for public health insurance."
+      },
+      {
+        "id": "long_term_care_insurance",
+        "label": "Long-term care insurance",
+        "amountEUR": 140,
+        "category": "social_insurance",
+        "explanation": "Includes the assumed contribution for a childless employee."
+      },
+      {
+        "id": "unemployment_insurance",
+        "label": "Unemployment insurance",
+        "amountEUR": 78,
+        "category": "social_insurance",
+        "explanation": "Employee contribution toward unemployment protection."
+      },
+      {
+        "id": "solidarity_surcharge",
+        "label": "Solidarity surcharge",
+        "amountEUR": 0,
+        "category": "tax",
+        "explanation": "Not expected in this illustrative calculation."
+      },
+      {
+        "id": "church_tax",
+        "label": "Church tax",
+        "amountEUR": 0,
+        "category": "tax",
+        "explanation": "Assumes Ali is not registered for church tax."
+      }
+    ],
+    "totals": {
+      "wageTaxEUR": 1135,
+      "socialInsuranceEUR": 1284,
+      "totalDeductionsEUR": 2419,
+      "netSalaryEUR": 3581
+    },
+    "perHundredEuroExplanation": {
+      "wageTaxEUR": 18.9,
+      "socialInsuranceEUR": 21.4,
+      "netPayEUR": 59.7
+    },
+    "insight": "Not all deductions are tax. About EUR 1,284 per month represents employee social-insurance contributions."
+  },
+  "pakistanPayroll": {
+    "period": "monthly",
+    "grossSalaryPKR": 300000,
+    "annualGrossSalaryPKR": 3600000,
+    "estimatedAnnualIncomeTaxPKR": 416000,
+    "estimatedMonthlyIncomeTaxPKR": 34667,
+    "estimatedNetSalaryPKR": 265333,
+    "estimatedNetSalaryEUR": 834,
+    "effectiveIncomeTaxRatePercent": 11.56,
+    "scopeNote": "This estimate includes salary income tax only. Employer benefits, pension arrangements and other individual deductions are excluded."
+  },
+  "housingPlanner": {
+    "status": "apartment_not_selected",
+    "headline": "Find an apartment you can comfortably afford",
+    "recommendedMaximumWarmRentEUR": 1150,
+    "targetRemainingAfterBudgetEUR": 1200,
+    "currentScenarioWarmRentEUR": 1050,
+    "options": [
+      {
+        "warmRentEUR": 950,
+        "moneyRemainingEUR": 1416,
+        "assessment": "comfortable"
+      },
+      {
+        "warmRentEUR": 1050,
+        "moneyRemainingEUR": 1316,
+        "assessment": "recommended"
+      },
+      {
+        "warmRentEUR": 1150,
+        "moneyRemainingEUR": 1216,
+        "assessment": "within_target"
+      },
+      {
+        "warmRentEUR": 1250,
+        "moneyRemainingEUR": 1116,
+        "assessment": "possible_less_flexible"
+      },
+      {
+        "warmRentEUR": 1450,
+        "moneyRemainingEUR": 916,
+        "assessment": "higher_financial_pressure"
+      }
+    ],
+    "note": "Warm rent must be confirmed from the listing. Electricity, internet and mobile costs are budgeted separately."
+  },
+  "berlinMonthlyBudget": {
+    "netIncomeEUR": 3581,
+    "expenses": [
+      {
+        "id": "warm_rent",
+        "label": "Warm apartment rent",
+        "amountEUR": 1050,
+        "type": "recurring",
+        "isConfirmed": false
+      },
+      {
+        "id": "utilities_connectivity",
+        "label": "Electricity, internet and mobile",
+        "amountEUR": 115,
+        "type": "recurring",
+        "isConfirmed": false
+      },
+      {
+        "id": "groceries",
+        "label": "Groceries",
+        "amountEUR": 350,
+        "type": "recurring",
+        "isConfirmed": false
+      },
+      {
+        "id": "local_transport",
+        "label": "Local transport",
+        "amountEUR": 70,
+        "type": "recurring",
+        "isConfirmed": false
+      },
+      {
+        "id": "personal_and_leisure",
+        "label": "Personal spending and leisure",
+        "amountEUR": 430,
+        "type": "recurring",
+        "isConfirmed": false
+      },
+      {
+        "id": "first_year_moving_buffer",
+        "label": "First-year furniture and moving buffer",
+        "amountEUR": 250,
+        "type": "temporary",
+        "isConfirmed": false
+      }
+    ],
+    "totalExpensesEUR": 2265,
+    "moneyRemainingEUR": 1316,
+    "settledMonthlyExpensesEUR": 2015,
+    "settledMoneyRemainingEUR": 1566,
+    "settledStateExplanation": "After the temporary EUR 250 moving buffer ends, estimated monthly money remaining rises to EUR 1,566."
+  },
+  "suggestedAllocation": {
+    "availableEUR": 1316,
+    "items": [
+      {
+        "id": "emergency_savings",
+        "label": "Emergency savings",
+        "amountEUR": 500
+      },
+      {
+        "id": "travel_to_pakistan",
+        "label": "Travel or visits to Pakistan",
+        "amountEUR": 250
+      },
+      {
+        "id": "flexible_spending",
+        "label": "Flexible spending",
+        "amountEUR": 250
+      },
+      {
+        "id": "additional_savings_or_remittances",
+        "label": "Additional savings or remittances",
+        "amountEUR": 316
+      }
+    ],
+    "note": "These are optional planning targets, not compulsory expenses."
+  },
+  "consumptionTax": {
+    "displayRule": "informational_only_do_not_deduct_again",
+    "germany": {
+      "standardVatRatePercent": 19,
+      "reducedVatRatePercent": 7,
+      "estimatedVatAlreadyIncludedInMonthlyBudgetEUR": {
+        "min": 150,
+        "max": 165
+      },
+      "residentialRentVatTreatmentLabel": "not_an_ordinary_19_percent_retail_purchase"
+    },
+    "pakistan": {
+      "standardFederalSalesTaxReferencePercent": 18,
+      "note": "Actual treatment varies by product, service, province and applicable exemptions."
+    },
+    "explanation": "VAT or sales tax is generally already included in displayed consumer prices. It must not be subtracted a second time from net salary.",
+    "example": {
+      "displayPriceEUR": 119,
+      "vatRatePercent": 19,
+      "vatIncludedEUR": 19,
+      "amountPaidEUR": 119
+    }
+  },
+  "moveInFund": {
+    "items": [
+      {
+        "id": "rental_deposit_placeholder",
+        "label": "Rental deposit placeholder",
+        "amountEUR": 2550,
+        "isConfirmed": false
+      },
+      {
+        "id": "first_warm_rent",
+        "label": "First warm rent",
+        "amountEUR": 1050,
+        "isConfirmed": false
+      },
+      {
+        "id": "initial_furniture",
+        "label": "Initial furniture and household items",
+        "amountEUR": 700,
+        "isConfirmed": false
+      },
+      {
+        "id": "setup_buffer",
+        "label": "Registration, transport and setup buffer",
+        "amountEUR": 250,
+        "isConfirmed": false
+      }
+    ],
+    "recommendedCashTargetEUR": 4550,
+    "assumption": "Deposit placeholder is based on an assumed EUR 850 cold rent.",
+    "reassuranceMessage": "You do not need EUR 4,550 every month. This is a one-time setup target."
+  },
+  "nextActions": [
+    {
+      "id": "confirm_employment_start_date",
+      "priority": 1,
+      "status": "open",
+      "title": "Enter your actual German employment start date",
+      "reason": "Needed for the year-of-move calculation.",
+      "estimatedMinutes": 1
+    },
+    {
+      "id": "add_pakistan_income",
+      "priority": 2,
+      "status": "open",
+      "title": "Add income earned in Pakistan during the moving year",
+      "reason": "TaxPat can identify whether professional review is recommended.",
+      "estimatedMinutes": 3
+    },
+    {
+      "id": "add_apartment_listing",
+      "priority": 3,
+      "status": "open",
+      "title": "Add an apartment listing",
+      "reason": "TaxPat will show whether the rent fits your monthly target.",
+      "estimatedMinutes": 2
+    },
+    {
+      "id": "confirm_health_insurer",
+      "priority": 4,
+      "status": "later",
+      "title": "Confirm your health insurer and upload a payslip",
+      "reason": "The exact health-insurance deduction can differ from the current estimate.",
+      "estimatedMinutes": 4
+    }
+  ],
+  "readiness": {
+    "status": "on_track",
+    "filingPreparationPercent": 65,
+    "noImmediateDeadlineDetected": true,
+    "completed": [
+      "regular_german_salary_understood",
+      "initial_monthly_budget_created",
+      "housing_target_created"
+    ],
+    "needsAttention": [
+      "cross_border_move_year_review",
+      "actual_apartment_cost",
+      "employment_start_date"
+    ],
+    "notificationPolicyCopy": "TaxPat will alert you only when a decision, document or deadline requires your attention."
+  },
+  "ui": {
+    "primaryTabs": [
+      "Overview",
+      "Salary",
+      "Housing",
+      "Move year",
+      "Documents"
+    ],
+    "recommendedPrimaryVisuals": [
+      "country_comparison_cards",
+      "payroll_deduction_waterfall",
+      "apartment_rent_slider"
+    ],
+    "tone": [
+      "calm",
+      "plain_language",
+      "non_judgmental",
+      "transparent_about_uncertainty"
+    ],
+    "amountDisplay": {
+      "showWholeEurosByDefault": true,
+      "showOriginalCurrencyForPakistan": true,
+      "showConvertedEuroValueForComparison": true,
+      "negativeAmountsUseMinusSign": true
+    }
+  },
+  "sources": [
+    {
+      "id": "germany_2026_income_tax_tariff",
+      "label": "German Federal Ministry of Finance: 2026 income-tax tariff",
+      "url": "https://esth.bundesfinanzministerium.de/lsth/2026/A-Einkommensteuergesetz/IV-Tarif-31-34b/Paragraf-32a/inhalt.html"
+    },
+    {
+      "id": "germany_2026_health_insurance",
+      "label": "German Federal Ministry of Health: 2026 health-insurance rates",
+      "url": "https://www.bundesgesundheitsministerium.de/beitraege/seite"
+    },
+    {
+      "id": "germany_2026_social_insurance",
+      "label": "German Pension Insurance: 2026 social-insurance values",
+      "url": "https://www.deutsche-rentenversicherung.de/DRV/DE/Experten/Zahlen-und-Fakten/Werte-der-Rentenversicherung/werte-der-rentenversicherung"
+    },
+    {
+      "id": "germany_vat",
+      "label": "German Federal Ministry of Finance: VAT",
+      "url": "https://www.bundesfinanzministerium.de/Content/DE/Glossareintraege/U/umsatzsteuer.html"
+    },
+    {
+      "id": "pakistan_tax_rate_cards",
+      "label": "Pakistan Federal Board of Revenue: withholding tax rate cards",
+      "url": "https://www.fbr.gov.pk/withholding-taxes-rate-card/174298/174301"
+    }
+  ]
+}
